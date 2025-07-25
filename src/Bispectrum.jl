@@ -39,10 +39,10 @@ function B222(k1, k2, f, bias, PL, kmax)
 end
 
 function B222sp(k1, k2, f, bias, PL, kmax)
-    result = (0, 0)
+    result = 0
     for pair in combinations((k1,k2,-k1-k2), 2)
-        fint = (x, func) -> func[1] = B222intSph(pair[1], pair[2], x./[kmax, pi, 2*pi], f, bias, PL)*(x[1]/kmax)^2*sin(x[2]/pi)
-        result = result .+ suave(fint, 3, rtol=1e-3).integral[1]
+        fint = (x, func) -> func[1] = B222intSph(pair[1], pair[2], x.*[kmax, pi, 2*pi], f, bias, PL)*(x[1]*kmax)^2*sin(x[2]*pi)
+        result = result .+ suave(fint, 3, rtol=1e-4).integral[1]
     end
     return result
 end
